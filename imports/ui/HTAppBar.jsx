@@ -4,7 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { A } from 'hookrouter';
+import { setLinkProps } from 'hookrouter';
 
 // HTAppBar - AppBar component for the project
 
@@ -27,7 +27,7 @@ export default function HTAppBar() {
 
   const makeButton = (page) => {
     return(
-      <Button color="inherit" key={page.id} href={page.value} component={A}>
+      <Button {...setLinkProps({ href: page.value })} color="inherit" key={page.id}>
         {page.name}
       </Button>
     );
