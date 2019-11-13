@@ -11,6 +11,7 @@ import { setLinkProps, usePath } from 'hookrouter';
 const Pages = [
   { id: 1, name: 'Home', value: '/' },
   { id: 2, name: 'Customers', value: '/customers' },
+  { id: 3, name: 'Projects', value: '/projects' },
 ];
 
 const useStyles = makeStyles(theme => ({
