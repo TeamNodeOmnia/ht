@@ -18,6 +18,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import ProjectCard from './ProjectCard';
+import ProjectDialog from './ProjectDialog';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -39,8 +40,6 @@ function ProjectsList(props) {
   const classes = useStyles();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [newValue, setNewValue] = useState("");
-  const [customer, setCustomer] = useState("");
 
   const makeLink = (project) => {
     const customer = props.customers.find((r) => { if (r._id === project.customer) return true; });
@@ -82,19 +81,6 @@ function ProjectsList(props) {
     setSnackbarOpen(false);
   };
 
-  const handleAdd = () => {
-    insertProject(newValue, customer)
-    setDialogOpen(false);
-    setSnackbarOpen(true);
-  };
-
-  const handleChange = (event) => {
-    setNewValue(event.target.value);
-  };
-  const handleCustomerChange = (event) => {
-    setCustomer(event.target.value);
-  };
-
   return (
     <div>
       <Grid container spacing={2}>
@@ -124,42 +110,7 @@ function ProjectsList(props) {
         onClick={handleClickOpen}>
         <AddIcon />
       </Fab>
-      <Dialog open={dialogOpen} onClose={handleClose} aria-labelledby="project-add">
-        <DialogTitle id="project-add-title">Add project</DialogTitle>
-        <DialogContent>
-          <TextField className={classes.textField}
-            id="customer-name"
-            label="Customer"
-            select
-            value={customer}
-            onChange={handleCustomerChange}
-            fullWidth
-          >
-            {customers}
-          </TextField>
-          <TextField className={classes.textField}
-            margin="dense"
-            id="project-name"
-            label="Project Name"
-            fullWidth
-            onChange={handleChange}
-            onKeyPress={(event) => {
-              if (event.key === "Enter") {
-                event.preventDefault();
-                handleAdd();
-              }
-            }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleAdd} color="primary">
-            Add
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <ProjectDialog open={dialogOpen} onClose={handleClose} customers={props.customers} />
     </div>
   );
 }
