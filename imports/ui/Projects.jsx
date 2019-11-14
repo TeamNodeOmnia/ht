@@ -46,7 +46,7 @@ function ProjectsList(props) {
     const customer = props.customers.find((r) => { if (r._id === project.customer) return true; });
 
     return (
-      <Grid item key={project._id} xs={12} sm={6} lg={4}>
+      <Grid item key={project._id} xs={12} sm={6}>
         <ProjectCard project={project} customer={customer} />
       </Grid>
     );
