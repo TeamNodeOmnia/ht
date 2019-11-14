@@ -12,10 +12,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import useSnackbar from './Snackbars';
 
 import ProjectCard from './ProjectCard';
 import ProjectDialog from './ProjectDialog';
@@ -39,14 +38,14 @@ const useStyles = makeStyles(theme => ({
 function ProjectsList(props) {
   const classes = useStyles();
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbar, openSnackbar] = useSnackbar();
 
   const makeLink = (project) => {
     const customer = props.customers.find((r) => { if (r._id === project.customer) return true; });
 
     return (
       <Grid item key={project._id} xs={12} sm={6}>
-        <ProjectCard project={project} customer={customer} />
+        <ProjectCard project={project} customer={customer} openSnackbar={openSnackbar} />
       </Grid>
     );
   };
@@ -77,40 +76,18 @@ function ProjectsList(props) {
     setDialogOpen(false);
   };
 
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
-
   return (
     <div>
       <Grid container spacing={2}>
         { projects }
       </Grid>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-        ContentProps={{
-          'aria-describedby': 'message-id',
-        }}
-        message={ <span id="message-id">Project added</span> }
-        action={[
-          <IconButton
-            key="close"
-            aria-label="close"
-            color="inherit"
-            onClick={handleSnackbarClose}
-          >
-            <CloseIcon />
-          </IconButton>,
-        ]}
-        className={classes.snackbar}
-      />
+      {snackbar}
       <Fab color="primary" aria-label="add" className={classes.fab}
         onClick={handleClickOpen}>
         <AddIcon />
       </Fab>
-      <ProjectDialog open={dialogOpen} onClose={handleClose} customers={props.customers} />
+      <ProjectDialog open={dialogOpen} onClose={handleClose}
+        customers={props.customers} openSnackbar={openSnackbar} />
     </div>
   );
 }

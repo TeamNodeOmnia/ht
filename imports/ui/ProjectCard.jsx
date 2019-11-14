@@ -41,6 +41,7 @@ export default function ProjectCard(props) {
     setExpanded(!expanded);
   };
   const handleDeleteProject = () => {
+    props.openSnackbar('Project "' + props.project.name + '" deleted');
     deleteProject(props.project);
   };
 

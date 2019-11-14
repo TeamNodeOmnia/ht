@@ -38,6 +38,7 @@ export default function ProjectDialog(props) {
   const handleAdd = () => {
     insertProject(newValue, customer)
     props.onClose();
+    props.openSnackbar('Project "' + newValue + '" added');
     setCustomer("");
   };
 
@@ -49,7 +50,6 @@ export default function ProjectDialog(props) {
   };
 
   return (
-    <div>
       <Dialog open={props.open} onClose={props.onClose} aria-labelledby="project-add">
         <DialogTitle id="project-add-title">Add project</DialogTitle>
         <DialogContent>
@@ -86,6 +86,5 @@ export default function ProjectDialog(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
   );
 }
