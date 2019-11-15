@@ -8,6 +8,8 @@ import { useRoutes } from 'hookrouter';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import lightBlue from '@material-ui/core/colors/lightBlue';
 
+import AccountsUIWrapper from './AccountsUIWrapper';
+
 // our route table
 const routes = {
   '/': () => <HomePage />,
@@ -29,6 +31,7 @@ export default function App() {
   return(
     <ThemeProvider theme={theme}>
       <HTAppBar />
+      <AccountsUIWrapper />
       <br />
       <Container maxWidth="md">
         {routeResult}
